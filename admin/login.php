@@ -1,16 +1,27 @@
+<?php
+require_once 'includes/cons.php';
+require_once 'includes/db.php';
+session_start();
+$errMsg= null;
+
+if(isset($_POST['login_button']))
+{
+	$id= verifyUser($_POST['username'], $_POST['password']);
+    if($id > 0){
+		header("Location: dashboard.php");
+	}
+    $errMsg= "Invalid username or password";
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>SB Admin 2 - Login</title>
-
+    <title><?php echo MAIN_TITLE; ?></title>
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -41,15 +52,15 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="post" action="login.php">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user"
-                                                id="exampleInputEmail" aria-describedby="emailHelp"
+                                            <input type="text" class="form-control form-control-user"
+                                                id="username" name="username" aria-describedby="emailHelp" required
                                                 placeholder="Enter Email Address...">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user"
-                                                id="exampleInputPassword" placeholder="Password">
+                                            name="password" id="exampleInputPassword" placeholder="Password" required>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -58,23 +69,31 @@
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        <?php if($errMsg != null){
+                                            echo '<div class="container">
+                                                    <div class="row">
+                                                        <div class="col"></div>
+                                                        <div class="col"><span class="badge badge-danger">'.$errMsg.'</span></div>
+                                                        <div class="col"></div>
+                                                    </div>
+                                                </div>';
+                                            }
+                                        if(isset($_GET['logged_out'])){
+                                            echo '<div class="alert alert-success alert-dismissible fade show" role="alert">
+                                            <strong>Successfully Logged out</strong>
+                                          </div>';
+                                        }
+                                        ?>
+                                        <button type="submit" name="login_button" class="btn btn-primary btn-user btn-block">
                                             Login
-                                        </a>
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
+                                        </button>
                                     </form>
-                                    <hr>
+                                    
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <a class="small" href="forgot-password.php">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                        <a class="small" href="register.php">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>
