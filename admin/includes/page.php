@@ -1,6 +1,7 @@
 <?php
 
-function get_head(){
+function get_head()
+{
     return '
     <head>
     <meta charset="utf-8">
@@ -8,7 +9,7 @@ function get_head(){
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>'.MAIN_TITLE.'</title>
+    <title>' . MAIN_TITLE . '</title>
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
@@ -20,12 +21,12 @@ function get_head(){
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-
 </head>
     ';
 }
 
-function get_topbar(){
+function get_topbar()
+{
     return '
     <!-- Topbar -->
         <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
@@ -201,7 +202,7 @@ function get_topbar(){
                 <li class="nav-item dropdown no-arrow">
                     <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">'.$_SESSION['user'].'</span>
+                        <span class="mr-2 d-none d-lg-inline text-gray-600 small">' . $_SESSION['user'] . '</span>
                         <img class="img-profile rounded-circle"
                             src="img/undraw_profile.svg">
                     </a>
@@ -234,69 +235,40 @@ function get_topbar(){
         <!-- End of Topbar -->';
 }
 
-function get_main_content($page_title, $page_description){
+function get_main_content($profile)
+{
     $topbar = get_topbar();
     return '
     <!-- Main Content -->
     <div id="content">
-        '.$topbar.'
+        ' . $topbar . '
         <!-- Begin Page Content -->
         <div class="container-fluid">
             <!-- Page Heading -->
-            <h1 class="h3 mb-2 text-gray-800">'.$page_title.'</h1>
-            <p class="mb-4">'.$page_description.'</p>
-            <!-- DataTales Example -->
+            <h1 class="h3 mb-2 text-gray-800">' . $profile['page-title'] . '</h1>
+            <!-- Default Action buttons -->
+            <div class="d-flex justify-content-between">
+                <div>
+                    <!--free left space-->
+                </div>
+                <div>
+                    <button type="button" class="btn btn-primary btn-sm" name="add_new" data-toggle="modal" data-target="#add_new_modal">Add New</button>
+                    <button type="button" class="btn btn-secondary btn-sm" name="edit" data-toggle="modal" data-target="#edit_modal">Edit</button>
+                    <button type="button" class="btn btn-danger btn-sm" name="remove">Remove</button>
+                </div>
+            </div>
+            <!-- End Action buttons -->
+            <!-- DataTables Example -->
             <div class="card shadow mb-4">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">' . $profile['page-title'] . '</h6>
                 </div>
                 <div class="card-body">
                     <div class="table-responsive">
-                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </thead>
-                            <tfoot>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Position</th>
-                                    <th>Office</th>
-                                    <th>Age</th>
-                                    <th>Start date</th>
-                                    <th>Salary</th>
-                                </tr>
-                            </tfoot>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                    <td>61</td>
-                                    <td>2011/04/25</td>
-                                    <td>$320,800</td>
-                                </tr>
-                                <tr>
-                                    <td>Garrett Winters</td>
-                                    <td>Accountant</td>
-                                    <td>Tokyo</td>
-                                    <td>63</td>
-                                    <td>2011/07/25</td>
-                                    <td>$170,750</td>
-                                </tr>
-                                
-                            </tbody>
-                        </table>
+                        ' . $profile['content'] . '
                     </div>
                 </div>
             </div>
-
         </div>
         <!-- /.container-fluid -->
 
@@ -305,26 +277,29 @@ function get_main_content($page_title, $page_description){
     ';
 }
 
-function get_wrapper($title,$page_description){
+function get_wrapper($profile)
+{
+    $modal_targets = get_default_modal_targets($profile);
     $sidebar = get_sidebar();
-    $main_content = get_main_content($title,$page_description);
+    $main_content = get_main_content($profile);
     return '
     <!-- Page Wrapper -->
     <div id="wrapper">
-    '.$sidebar.'
+    ' . $sidebar . '
         <!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
-            '.$main_content.'
-
+            ' . $main_content . '
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; '.MAIN_TITLE.' 2020</span>
+                        <span>Copyright &copy; ' . MAIN_TITLE . ' 2020</span>
                     </div>
                 </div>
             </footer>
             <!-- End of Footer -->
+            
+            '.$modal_targets.'
 
         </div>
         <!-- End of Content Wrapper -->
@@ -334,21 +309,23 @@ function get_wrapper($title,$page_description){
     ';
 }
 
-function get_body($title, $page_description){
-    $wrapper = get_wrapper($title, $page_description);
+function get_body($profile)
+{
+    $wrapper = get_wrapper($profile);
     $scroll_top = get_scroll_to_top();
     $logout_modal = get_logout_modal();
     $scripts = get_footer_js_scripts();
     return '
     <body id="page-top">
-    '.$wrapper.'
-    '.$scroll_top.'
-    '.$logout_modal.'
-    '.$scripts.'
+    ' . $wrapper . '
+    ' . $scroll_top . '
+    ' . $logout_modal . '
+    ' . $scripts . '
     </body>';
 }
 
-function get_sidebar(){
+function get_sidebar()
+{
     return '
     <!-- Sidebar -->
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
@@ -357,7 +334,7 @@ function get_sidebar(){
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">'.MAIN_TITLE.' <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">' . MAIN_TITLE . ' <sup>2</sup></div>
             </a>
             <!-- Divider -->
             <hr class="sidebar-divider my-0">
@@ -457,14 +434,15 @@ function get_sidebar(){
     ';
 }
 
-function get_doc($title, $page_description){
+function get_doc($profile)
+{
     $head = get_head();
-    $body = get_body($title,$page_description);
+    $body = get_body($profile);
     return '
     <!DOCTYPE html>
     <html lang="en">
-        '.$head.'
-        '.$body.'
+        ' . $head . '
+        ' . $body . '
     </html>';
 }
 ?>
