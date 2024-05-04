@@ -1,7 +1,7 @@
 <?php
 
 function getDBConnection(){
-	$conn=mysqli_connect('localhost',DB_USER, DB_PASS, DB_NAME) or die("error occurred on getConnection " . mysqli_error($conn));
+	$conn=mysqli_connect('localhost','ch295301_saransol', 'welcome3$IBM', 'ch295301_saransol') or die("error occurred on getConnection " . mysqli_error($conn));
 	return $conn;
 }
 function executeSQL($sql){
@@ -64,7 +64,7 @@ function cheSNull($value){
 }
 function verifyUser($username, $password){
     $bid= -1;
-	$sql= "SELECT bid, role, password FROM bookies WHERE username ='".$username."' ";
+	$sql= "SELECT bid, role FROM bookies WHERE username ='".$username."' and password = '".$password."'";
 	$rows= getFetchArray($sql);
     if ($rows != null){
         $rowCounts= count($rows);
@@ -73,16 +73,12 @@ function verifyUser($username, $password){
             {
                 $bid= $result['bid'];
                 $role= $result['role'];
-                $hash= $result['password'];
-                $verify= password_verify($password, $hash);
-                if ($verify){
-                    if($role== "admin"){
-                        $_SESSION['role']= $role;
-                    }
-                    $_SESSION['bid']= $bid;
-                    $_SESSION['user']= $username;
-                    return $bid;
+				if($role== "admin"){
+					$_SESSION['role']= $role;
                 }
+                $_SESSION['bid']= $bid;
+                $_SESSION['user']= $username;
+                return $bid;
             }
         }
     }

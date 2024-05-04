@@ -4,11 +4,12 @@ require_once 'includes/db.php';
 session_start();
 $errMsg= null;
 
+
 if(isset($_POST['login_button']))
 {
-	$id= verifyUser($_POST['username'], $_POST['password']);
+	$id = verifyUser($_POST['username'], $_POST['password']);
     if($id > 0){
-		header("Location: dashboard.php");
+		header("Location: customers.php");
 	}
     $errMsg= "Invalid username or password";
 }
