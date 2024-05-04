@@ -1,7 +1,7 @@
 <?php
 
 function getDBConnection(){
-	$conn=mysqli_connect('localhost','ch295301_saransol', 'welcome3$IBM', 'ch295301_saransol') or die("error occurred on getConnection " . mysqli_error($conn));
+	$conn=mysqli_connect('localhost', DB_USER, DB_PASS, DB_NAME) or die("error occurred on getConnection " . mysqli_error($conn));
 	return $conn;
 }
 function executeSQL($sql){
