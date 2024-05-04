@@ -252,9 +252,16 @@ function get_main_content($profile)
                     <!--free left space-->
                 </div>
                 <div>
-                    <button type="button" class="btn btn-primary btn-sm" name="add_new" data-toggle="modal" data-target="#add_new_modal">Add New</button>
+                    <button type="button" class="btn btn-success btn-sm"
+                        name="add_new" data-toggle="modal"
+                        data-target="#add_new_modal">
+                            Add New
+                    </button>
                     <button type="button" class="btn btn-secondary btn-sm" name="edit" data-toggle="modal" data-target="#edit_modal">Edit</button>
                     <button type="button" class="btn btn-danger btn-sm" name="remove">Remove</button>
+                    <button type="button" class="btn btn-primary btn-sm" name="export">Export</button>
+                    <button type="button" class="btn btn-warning btn-sm" name="print">Print</button>
+                    <button type="button" class="btn btn-info btn-sm" name="reports">Reports</button>
                 </div>
             </div>
             <!-- End Action buttons -->

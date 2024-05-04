@@ -62,12 +62,12 @@ function getHead($title){
 
 function checkUserLoggedIn(){
     if(!isset($_SESSION['user'])){
-        header("Location: login/login.php");
+        header("Location: login.php");
     } elseif(isset($_GET['logoff']))
     {
         unset($_SESSION['user']);
         session_destroy();
-        header('Location: login/login.php');
+        header('Location: login.php');
     }
 }
 
@@ -128,9 +128,9 @@ function get_footer_js_scripts(){
 function get_default_modal_targets($profile){
     return '
     <!-- add_new Modal -->
-            <div class="modal fade" id="add_new_modal" tabindex="-1" role="dialog" aria-labelledby="add_new_modalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
+    <div class="modal fade" id="add_new_modal" tabindex="-1" role="dialog" aria-labelledby="add_new_modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="add_new_modalLabel">Add New '.$profile["page-title"].'</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -144,10 +144,10 @@ function get_default_modal_targets($profile){
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary">Save changes</button>
                 </div>
-                </div>
             </div>
-            </div>
-            <!-- End of add_new Modal -->
+        </div>
+    </div>
+    <!-- End of add_new Modal -->
 
             <!-- edit Modal -->
             <div class="modal fade" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="edit_modalLabel" aria-hidden="true">
