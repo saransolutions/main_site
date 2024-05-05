@@ -1,16 +1,117 @@
 <?php
 
-function get_head()
-{
+function get_scroll_to_top(){
     return '
-    <head>
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    ';
+}
+
+function get_logout_modal(){
+    return '
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="index.php?logoff">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    ';
+}
+
+function get_footer_js_scripts(){
+    return '
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/datatables/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="js/demo/datatables-demo.js"></script>
+    ';
+}
+
+function get_default_modal_targets($profile){
+    return '
+    <!-- add_new Modal -->
+    <div class="modal fade" id="add_new_modal" tabindex="-1" role="dialog" aria-labelledby="add_new_modalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="add_new_modalLabel">Add New '.$profile["page-title"].'</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    '.$profile["add-new-form"].'
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End of add_new Modal -->
+
+            <!-- edit Modal -->
+            <div class="modal fade" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="edit_modalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="edit_modalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    edit box
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div>
+            </div>
+            <!-- End of edit Modal -->
+    ';
+}
+
+function get_meta(){
+    return '
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
-    <meta name="author" content="">
-    <title>' . MAIN_TITLE . '</title>
-    <!-- Custom fonts for this template -->
+    <meta name="author" content="">';
+}
+
+function get_links(){
+    return '<!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
@@ -20,8 +121,17 @@ function get_head()
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
     <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-</head>
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">';
+}
+
+function get_head()
+{
+    return '
+    <head>
+        '.get_meta().'
+        <title>' . MAIN_TITLE . '</title>
+        '.get_links().'
+    </head>
     ';
 }
 
@@ -439,6 +549,53 @@ function get_sidebar()
         </ul>
         <!-- End of Sidebar -->
     ';
+}
+
+function get_attr_name($display_name){
+    $attr = str_replace(' *', '', strtolower($display_name));
+    $attr = preg_replace('/\s+/', '_', $attr);
+    return $attr;
+}
+
+function input_text_single_col($display_name, $class_name){
+    $result = '';
+    $attr = get_attr_name($display_name);
+    $result .= '
+    <div class="'.$class_name.'">';
+    $result .= '<label for="'.$attr.'">'.$display_name.'</label>';
+    if (str_contains($display_name, '*')){
+        $result .= '<input type="text" class="form-control" id="'.$attr.'" name="'.$attr.'" placeholder="" value="" required="">';
+    }else{
+        $result .= '<input type="text" class="form-control" id="'.$attr.'" name="'.$attr.'" placeholder="" value="">';
+    }
+    $result .= '<div class="invalid-feedback">';
+    $result .= 'Invalid '.$display_name.'';
+    $result .= '</div>';
+    $result .= '</div>
+    ';
+    return $result;
+}
+
+function row_with_two_cols($col1, $col2){
+    
+    $result = '
+    <!-- add_single_row_with_two_cols --!>';
+    $result .= '<div class="row">';
+    $result .= input_text_single_col($col1, "col-md-6 mb-3");
+    $result .= input_text_single_col($col2, "col-md-6 mb-3");
+    $result .= '</div>';
+    $result .= '
+    <!-- add_single_row_with_two_cols --!>';
+    return $result;
+}
+
+function row_with_single_col($display_name){
+    $result = '
+    <!-- add_single_row_with_single_col --!>';
+    $result = input_text_single_col($display_name, "mb-3");
+    $result .= '<!-- add_single_row_with_single_col --!>
+    ';
+    return $result;
 }
 
 function get_doc($profile)
