@@ -563,7 +563,7 @@ function input_text_single_col($display_name, $class_name){
     $result .= '
     <div class="'.$class_name.'">';
     $result .= '<label for="'.$attr.'">'.$display_name.'</label>';
-    if (str_contains($display_name, '*')){
+    if (strpos($display_name, '*') !== false){
         $result .= '<input type="text" class="form-control" id="'.$attr.'" name="'.$attr.'" placeholder="" value="" required="">';
     }else{
         $result .= '<input type="text" class="form-control" id="'.$attr.'" name="'.$attr.'" placeholder="" value="">';
