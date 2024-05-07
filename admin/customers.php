@@ -41,6 +41,11 @@ if (isset($_POST["add-new-customer-form"])){
         </div>
     </div>
     ';
+    $profile["edit-form"] = 'edit box';
+    $profile["remove-form"] = 'Remove box';
+    $profile["add-modal-id"] = 'add_new_modal';
+    $profile["edit-modal-id"] = 'edit_modal';
+    $profile["remove-modal-id"] = 'remove_modal';
     $profile["content"] = get_main_table(null);
     echo get_doc($profile);
 }

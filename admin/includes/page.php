@@ -35,10 +35,6 @@ function get_logout_modal(){
 
 function get_footer_js_scripts(){
     return '
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
@@ -54,51 +50,37 @@ function get_footer_js_scripts(){
     ';
 }
 
-function get_default_modal_targets($profile){
-    return '
-    <!-- add_new Modal -->
-    <div class="modal fade" id="add_new_modal" tabindex="-1" role="dialog" aria-labelledby="add_new_modalLabel" aria-hidden="true">
+function show_modal($button_name, $page_title, $button_form, $id){
+    $result = '
+    <!-- '.$button_name.' Modal -->
+    <div class="modal fade" id="'.$id.'" tabindex="-1" role="dialog" aria-labelledby="'.$id.'Label" aria-hidden="true">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="add_new_modalLabel">Add New '.$profile["page-title"].'</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    '.$profile["add-new-form"].'
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End of add_new Modal -->
-
-            <!-- edit Modal -->
-            <div class="modal fade" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="edit_modalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="edit_modalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    edit box
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-                </div>
-            </div>
-            </div>
-            <!-- End of edit Modal -->
+                    <h5 class="modal-title" id="'.$id.'Label">'.$button_name.' '.$page_title.'</h5>
     ';
+    
+    $result .= '<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    '.$button_form.'
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</div>
+</div>
+</div>
+</div>
+<!-- End of '.$button_name.' Modal -->';
+    return $result;
+}
+
+function get_default_modal_targets($profile){
+    return show_modal("Add New",$profile["page-title"],$profile["add-new-form"], $profile["add-modal-id"]).
+    show_modal("Edit",$profile["page-title"],$profile["edit-form"], $profile["edit-modal-id"]).
+    show_modal("Remove",$profile["page-title"],$profile["remove-form"], $profile["remove-modal-id"]);
 }
 
 function get_meta(){
@@ -131,7 +113,40 @@ function get_head()
         '.get_meta().'
         <title>' . MAIN_TITLE . '</title>
         '.get_links().'
+        '.js_custom().'
     </head>
+    ';
+}
+
+function js_custom(){
+    return '
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#edit_button,#remove_button,#export_button").click(function(){
+                var count = $("input:checkbox:checked").length
+                if (count == 0) {
+                    alert("select at least \"one\" checkbox")
+                    return false
+                }else if (count > 1){
+                    alert("Not select more than \"one\" checkbox")
+                    return false
+                }else{
+                    var value = $("input:checkbox:checked").val();
+                    var button_name = $(this).attr("name")
+                    if (button_name == "export"){
+                        var win = window.open("customers.php?id="+value+"", "_blank");
+                        if (win) {
+                            win.focus();
+                        } else {
+                            alert("Please allow popups for this website");
+                        }
+                    }
+                }
+            });
+        });
+    </script>
     ';
 }
 
@@ -367,10 +382,9 @@ function get_main_content($profile)
                         data-target="#add_new_modal">
                             Add New
                     </button>
-                    <button type="button" class="btn btn-secondary btn-sm" name="edit" data-toggle="modal" data-target="#edit_modal">Edit</button>
-                    <button type="button" class="btn btn-danger btn-sm" name="remove">Remove</button>
-                    <button type="button" class="btn btn-primary btn-sm" name="export">Export</button>
-                    <button type="button" class="btn btn-warning btn-sm" name="print">Print</button>
+                    <button type="button" class="btn btn-secondary btn-sm" name="edit" id="edit_button" data-toggle="modal" data-target="#edit_modal">Edit</button>
+                    <button type="button"  class="btn btn-danger btn-sm" name="remove" id="remove_button" data-toggle="modal" data-target="#remove_modal">Remove</button>
+                    <button type="button" class="btn btn-primary btn-sm" name="export" id="export_button">Export</button>
                     <button type="button" class="btn btn-info btn-sm" name="reports">Reports</button>
                 </div>
             </div>
@@ -437,6 +451,9 @@ function get_body($profile)
     ' . $wrapper . '
     ' . $scroll_top . '
     ' . $logout_modal . '
+    <p>If you click on me, I will disappear.</p>
+<p>Click me away!</p>
+<p>Click me too!</p>
     ' . $scripts . '
     </body>';
 }
