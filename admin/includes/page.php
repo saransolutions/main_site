@@ -1,5 +1,6 @@
 <?php
 
+
 function get_scroll_to_top(){
     return '
     <!-- Scroll to Top Button-->
@@ -136,7 +137,7 @@ function js_custom(){
                     var value = $("input:checkbox:checked").val();
                     var button_name = $(this).attr("name")
                     if (button_name == "export"){
-                        var win = window.open("customers.php?id="+value+"", "_blank");
+                        var win = window.open("customers.php?export_id="+value+"", "_blank");
                         if (win) {
                             win.focus();
                         } else {

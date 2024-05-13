@@ -37,7 +37,7 @@ function insert_customer($data){
 
     $sql="INSERT INTO customers(id, first_name, last_name, address, ort, pin_code, mobile, email, company_name, service_type, product_type, website_name, supported_language, total_pages, 
     media_support, domain_hosting, mail_support, mail_advertisement, user_feedback, seo_support,
-    google_business_support, cookies_support, google_check_activation, advance_paid, advance_amount, total_price, balance, delivery_date, warranty_period)
+    google_business_support, cookies_support, google_check_activation, advance_paid, advance_amount, total_price, balance, delivery_date, warranty_period, logo)
     VALUES (
         null,
         '".$first_name."',
@@ -60,7 +60,7 @@ function insert_customer($data){
         '".$user_feedback."','".$seo_support."',
         '".$google_business_support."','".$cookies_support."','".$google_check_activation."',
         '".$advance_paid."','".$advance_amount."','".$total_price."',
-        '".$balance."','".$delivery_date."','".$warranty_period."')";
+        '".$balance."','".$delivery_date."','".$warranty_period."', null)";
         executeSQL($sql);
         return getSingleValue("select max(id) from customers");
 }
