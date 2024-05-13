@@ -85,7 +85,7 @@ function export($id)
         $result = $rows[0];
         $delivery_date = $result["delivery_date"];
         if ($delivery_date == null){
-
+            return null;
         }
         $part1 = pdf_head() . '
         <body>
@@ -165,67 +165,7 @@ function export($id)
         if ($balance == 0){
             $part2 .= '<div style="text-align: center; font-style: italic;">Payment fully paid</div>';
         }else{
-            $part2 .= '
-            <br>
-            <div style="text-align: center; font-style: italic;">Pay the due amount in 30 days</div>
-            <table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse; " cellpadding="8"><tbody>
-            <tr>
-                <td width="30%">
-                    <h2>Empfangsschein</h2>
-                    <br>
-                    <h4>Konto / Zahlbar an</h4>
-                    <h5>CH61 0630 0506 2712 5784 0</h5>
-                    <p>Saran Solutions</p>
-                    <p>Wannersmattweg 10H</p>
-                    <p>3250 Lyss</p>
-                    <br>
-                    <p>Referencez</p>
-                    <p>SS-00'.$id.'</p>
-                    <br>
-                    Zahlbar durch<br>
-                    '.$name.'
-                    <br>
-                    '.$address.'
-                    <br>
-                    <br>
-                    <h4>CHF '.$balance.'</h4>
-                    
-                </td>
-                <td width="35%" style="border:0">
-                <h2>Zahlteil</h2>
-                <br>
-                <img src="bills/pay_1.png">
-                <br>
-                
-                <h4>Währung CHF </h4>
-                <h4>Betrag '.$balance.'</h4>
-                <br>
-                </td>
-                <td width="35%" style="border:0">
-                <h4>Konto / Zahlbar an</h4>
-                <h5>CH61 0630 0506 2712 5784 0</h5>
-                <p>Saran Solutions</p>
-                <p>Wannersmattweg 10H</p>
-                <p>3250 Lyss</p>
-                <br>
-                Zusätzliche Informationen
-                <br>
-                Rechnungskonto: SS-00'.$id.' <br>
-                Monat: 01.03.24 - 31.03.24 <br>
-                Zahlbar bis: 09.05.2024 <br>
-                
-                <br>
-                <p>Referencez</p>
-                <p>SS-00'.$id.'</p>
-                <br>
-                Zahlbar durch<br>
-                '.$name.'
-                <br>
-                '.$address.'
-                <br>
-                </td>
-            </tr>
-            </tbody></table>';
+            $part2 .= generate_bill($id, $name, $address, $balance);
         }
         $part2 .= '</body></html>';
         $content = $part1 . $data . $part2;
@@ -255,5 +195,69 @@ function export($id)
         $file_name = 'SS-00'.$id.'_'.str_replace(' ', '_', $name).'.pdf';
         $mpdf->Output($file_name, "I");
     }
+}
+
+
+function generate_bill($id, $name, $address, $balance){
+    return 
+'   <br>
+<div style="text-align: center; font-style: italic;">Pay the due amount in 30 days</div>
+<table class="items" width="100%" style="font-size: 9pt; border-collapse: collapse; " cellpadding="8"><tbody>
+    <tr>
+        <td width="30%">
+            <h2>Empfangsschein</h2>
+            <br>
+            <h4>Konto / Zahlbar an</h4>
+            <h5>CH61 0630 0506 2712 5784 0</h5>
+            <p>Saran Solutions</p>
+            <p>Wannersmattweg 10H</p>
+            <p>3250 Lyss</p>
+            <br>
+            <p>Referencez</p>
+            <p>SS-00'.$id.'</p>
+            <br>
+            Zahlbar durch<br>
+            '.$name.'
+            <br>
+            '.$address.'
+            <br>
+            <br>
+            <h4>CHF '.$balance.'</h4>
+        </td>
+        <td width="35%" style="border:0">
+            <h2>Zahlteil</h2>
+            <br>
+            <img src="bills/pay_1.png">
+            <br>    
+            <h4>Währung CHF </h4>
+            <h4>Betrag '.$balance.'</h4>
+            <br>
+        </td>
+        <td width="35%" style="border:0">
+            <h4>Konto / Zahlbar an</h4>
+            <h5>CH61 0630 0506 2712 5784 0</h5>
+            <p>Saran Solutions</p>
+            <p>Wannersmattweg 10H</p>
+            <p>3250 Lyss</p>
+            <br>
+            Zusätzliche Informationen
+            <br>
+            Rechnungskonto: SS-00'.$id.' <br>
+            Monat: 01.03.24 - 31.03.24 <br>
+            Zahlbar bis: 09.05.2024 <br>
+            
+            <br>
+            <p>Referencez</p>
+            <p>SS-00'.$id.'</p>
+            <br>
+            Zahlbar durch<br>
+            '.$name.'
+            <br>
+            '.$address.'
+            <br>
+        </td>
+        </tr>
+    </tbody>
+</table>';
 }
 ?>
