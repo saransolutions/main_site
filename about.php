@@ -1,6 +1,6 @@
 <?php 
 require_once 'funcs/cons.php';
-require_once 'contact_section.php';
+require_once 'about_section.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -8,20 +8,28 @@ require_once 'contact_section.php';
 echo get_head();
 ?>
 <body>
-<div class="mask-l" style="background-color: #fff; width: 100%; height: 100%; position: fixed; top: 0; left:0; z-index: 9999999;"></div> <!--removed by integration-->
-<?php
+    <div class="mask-l" style="background-color: #fff; width: 100%; height: 100%; position: fixed; top: 0; left:0; z-index: 9999999;"></div> <!--removed by integration-->
+    <?php
 echo get_header();
 echo whatsapp();
+echo after_header();
+
+
+?>
+
+<div class="l-main-container">
+
+<?php
 echo first_section();
 echo second_section();
+echo third_section();
+echo fourth_section();
 ?>
 </div>
 <?php
 echo footer();
 ?>
-
-
-
+  
 <script src="js/breakpoints.js"></script>
 <script src="js/jquery/jquery-1.11.1.min.js"></script>
 <!-- bootstrap -->
@@ -96,7 +104,5 @@ echo footer();
 <script src="js/scrollIt/scrollIt.min.js"></script>
 <script src="js/modules/navigation-slide.js"></script>
 
-
 </body>
 </html>
-

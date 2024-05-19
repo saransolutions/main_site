@@ -1,12 +1,22 @@
 <?php
 
-define("MAIN_TITLE", "Saran Solutions - Homepage");
+define("MAIN_TITLE", "Saran Solutions - Home");
 
-
+function add_track_smart_look(){
+  return "<script type='text/javascript'>
+  window.smartlook||(function(d) {
+    var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    c.charset='utf-8';c.src='https://web-sdk.smartlook.com/recorder.js';h.appendChild(c);
+    })(document);
+    smartlook('init', '6681201ae463fd7e927258a9ecbfa3f9ebc400b2', { region: 'eu' });
+</script>";
+}
 
 function get_head(){
     return '
     <head>
+    '.add_track_smart_look().'
     <meta charset="utf-8">
     <title>'.MAIN_TITLE.'</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -183,13 +193,7 @@ function get_header(){
       </li>
      <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
           <a href="contact.php"><i class="fa fa-folder-open b-menu-1level-ico"></i>Contact us<span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
-          <div class="b-top-nav__dropdomn">
-              <ul class="b-top-nav__2level_wrap">
-                  <li class="b-top-nav__2level_title f-top-nav__2level_title">Contact us</li>
-                  <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="contact_us.html"><i class="fa fa-angle-right"></i>Version1</a></li>
-                  <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="contact_us_v2.html"><i class="fa fa-angle-right"></i>Version2</a></li>
-              </ul>
-          </div>
+         
       </li>
     
     
