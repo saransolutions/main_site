@@ -1,0 +1,31 @@
+{
+    "common": {
+        "title" : {
+            "home": {
+                "de": "Haus",
+                "en": "Home",
+                "ta": "வீடு"
+            },
+            "about_us": {
+                "de": "Uber Uns",
+                "en": "About Us",
+                "ta": "எம்மை பற்றி"
+            },
+            "contact_us": {
+                "de": "Contact Uns",
+                "en": "Contact Us",
+                "ta": "தொடர்புக்கு"
+            },
+            "our_services": {
+                "de": "Unsere Services",
+                "en": "Our Services",
+                "ta": "எமது சேவைகள்"
+            },
+            "our_products": {
+                "de": "Contact Uns",
+                "en": "Contact Us",
+                "ta": "தொடர்புக்கு"
+            }
+        }
+    }
+}
