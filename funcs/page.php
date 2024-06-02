@@ -1,32 +1,35 @@
 <?php
 function get_doc($profile){
-    $content = '<!DOCTYPE html lang="'.$_SESSION["lang"].'"><html>';
-    $content .= get_head($profile);
-    $content .= '<body>';
-    $content .= get_header();
-    $content .= whatsapp();
-    if ($profile['page'] == 'home'){
-        $content .= get_slider();
-        $content .= choose_us();
-        $content .= services();
-        $content .= get_feedback();
-        $content .= client();
-    }elseif ($profile['page'] == 'about_us'){
-        $content .=  first_section();
-        $content .=  second_section($profile);
-        $content .=  third_section();
-        $content .=  fourth_section();
-    }elseif ($profile['page'] == 'contact_us'){
-        $content .=  contact_first_section();
-        $content .=  contact_second_section();
+    echo "<!DOCTYPE html>";
+    echo "<html>";
+    echo get_head($profile);
+    echo "<body>";
+    echo get_header();
+    echo whatsapp();
+    if ($profile["page"] == "home"){
+        echo get_slider();
+        echo choose_us();
+        echo get_services();
+        echo get_feedback();
+        echo "<hr>";
+        echo get_clients();
     }
-    
-    $content .= footer();
-    $content .= call_js();
-    $content .= '<script type="text/javascript" src="https://www.google.com/jsapi?autoload={\"modules\":[{\"name\":\"visualization\",\"version\":\"1\",\"packages\":[\"corechart\"]}]}"></script>';
-    $content .= '</body>';
-    $content .= '</html>';
-    return $content;
+    if ($profile["page"] == "about_us"){
+        echo get_about_us();
+    }
+    if ($profile["page"] == "services"){
+        echo get_service();
+    }
+    if ($profile["page"] == "packages"){
+        echo get_price();
+    }
+    if ($profile["page"] == "contact_us"){
+        echo get_contact_us();
+    }
+    echo footer();
+    echo call_js();
+    echo "</body>";
+    echo "</html>";
 }
 function change_lang(){
     if (isset($_GET['lang'])){
@@ -39,13 +42,12 @@ function val($page, $button){
     $con = "page ='".$page."' and button = '".$button."' and lang = '".$_SESSION["lang"]."'";
     $sql = "SELECT value FROM lang_table where ".$con;
     return getSingleValue($sql);
-    
   }
   
   function get_head($profile){
       return '
       <head>
-      <title>'.MAIN_TITLE.'- '.val('home', $profile['page']).'</title>
+      <title>'.MAIN_TITLE.' - '.val('common', $profile['page']).'</title>
       <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         '.css_links().'
@@ -100,491 +102,170 @@ function val($page, $button){
   }
   
   function footer(){
-    $our_tasks = val('home', 'footer', 'p', 'our_tasks');
       return '
-      <footer>
-      <div class="b-footer-primary">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-4 col-xs-12 f-copyright b-copyright">'.COPY_RIGHTS.'</div>
-                <div class="col-sm-8 col-xs-12">
-                    <div class="b-btn f-btn b-btn-default b-right b-footer__btn_up f-footer__btn_up j-footer__btn_up">
-                        <i class="fa fa-chevron-up"></i>
-                    </div>
-                    <nav class="b-bottom-nav f-bottom-nav b-right hidden-xs">
-                        <ul>
-                            <li><a href="home.php">'.val('home', 'home').'</a></li>
-                            <li><a href="about.php">'.val('home', 'about_us').'</a></li>
-                            <li><a href="service.php">'.val('home', 'our_services').'</a></li>
-                            <li><a href="service.php">'.val('home', 'packages').'</a></li>
-                            <li><a href="contact.php">'.val('home',  'contact_us').'</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        </div>
-    </div>
-      <div class="container">
-        <div class="b-footer-secondary row">
-          <div class="masonry-gridSizer col-sm-6 col-md-4 f-center b-footer-logo-containter">
-              <a href=""><img data-retina class="b-footer-logo color-theme" src="img/logo/logo.png" alt="Logo"/></a>
-              <div class="b-footer-logo-text f-footer-logo-text">
-              <p>'.$our_tasks.'</p>
-              <div class="b-btn-group-hor f-btn-group-hor">
-                <a href="#" class="b-btn-group-hor__item f-btn-group-hor__item">
-                  <i class="fa fa-instagram"></i>
-                </a>
-                <a href="#" class="b-btn-group-hor__item f-btn-group-hor__item">
-                  <i class="fa fa-facebook"></i>
-                </a>
-                <a href="#" class="b-btn-group-hor__item f-btn-group-hor__item">
-                  <i class="fa fa-youtube"></i>
-                </a>
-                <a href="#" class="b-btn-group-hor__item f-btn-group-hor__item">
-                  <i class="fa fa-whatsapp"></i>
-                </a>
-              </div>
-            </div>
+<footer>
+  <div class="b-footer-primary">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 col-xs-12 f-copyright b-copyright">'.COPY_RIGHTS.'</div>
+        <div class="col-sm-8 col-xs-12">
+          <div class="b-btn f-btn b-btn-default b-right b-footer__btn_up f-footer__btn_up j-footer__btn_up">
+            <i class="fa fa-chevron-up"></i>
           </div>
-          <div class="masonry-gridSizer col-sm-6 col-md-4">
-            <h4 class="f-primary-b f-legacy-h4">Our Services</h4>
-            <div class="b-blog-short-post row">
-              <div class="b-blog-short-post__item col-md-12 col-sm-4 col-xs-12 f-primary-b">
-                 <li><b>'.val('home', 'website_development').'</b></li><hr>
-                 <li><b>'.val('home', 'billing_system').'</b></li><hr>
-                 <li><b>'.val('home', 'travel_system').'</b></li><hr>
-                 <li><b>'.val('home', 'money_transfer_prog').'</b></li>
-              </div>
-            </div>
-          </div>
-          <div class="masonry-gridSizer col-sm-6 col-md-4">
-            <h4 class="f-primary-b f-legacy-h4">Contact Info</h4>
-            <div class="b-contacts-short-item-group">
-              <div class="b-contacts-short-item col-md-12 col-sm-4 col-xs-12">
-                <div class="b-contacts-short-item__icon f-contacts-short-item__icon f-contacts-short-item__icon_lg b-left">
-                  <i class="fa fa-map-marker"></i>
-                </div>
-                <div class="b-remaining f-contacts-short-item__text">
-                 <b>'.MAIN_ADDRESS.'<br/>
-                    '.MAIN_CITY.'<br/>
-                </b>
-                </div>
-              </div>
-              <div class="b-contacts-short-item col-md-12 col-sm-4 col-xs-12">
-                <div class="b-contacts-short-item__icon f-contacts-short-item__icon b-left f-contacts-short-item__icon_xs">
-                  <i class="fa fa-envelope"></i>
-                </div>
-                <div class="b-remaining f-contacts-short-item__text f-contacts-short-item__text_email">
-                  <a href="mailto:'.MAIN_EMAIL.'"><b>'.MAIN_EMAIL.'</b></a>
-                </div>
-              </div>
-              <div class="b-contacts-short-item col-md-12 col-sm-4 col-xs-12">
-                <div class="b-contacts-short-item__icon f-contacts-short-item__icon b-left f-contacts-short-item__icon_xs">
-                  <i class="fa fa-envelope"></i>
-                </div>
-                <div class="b-remaining f-contacts-short-item__text f-contacts-short-item__text_email">
-                  <b>'.MAIN_PHONE.'</b>
-                </div>
-              </div>
-            </div>
-          </div>
-          
+          <nav class="b-bottom-nav f-bottom-nav b-right hidden-xs">
+            <ul>
+              <li><a href="home.php">'.val('common', 'home').'</a></li>
+              <li><a href="about.php">'.val('common', 'about_us').'</a></li>
+              <li><a href="service.php">'.val('common', 'our_services').'</a></li>
+              <li><a href="service.php">'.val('common', 'packages').'</a></li>
+              <li><a href="contact.php">'.val('common', 'contact_us').'</a></li>
+            </ul>
+          </nav>
         </div>
       </div>
-    </footer>
+    </div>
+  </div>
+  <div class="container">
+    <div class="b-footer-secondary row">
+      <div class="masonry-gridSizer col-sm-6 col-md-4 f-center b-footer-logo-containter">
+        <a href=""><img data-retina class="b-footer-logo color-theme" src="'.MAIN_LOGO.'" alt="Logo" /></a>
+        <div class="b-footer-logo-text f-footer-logo-text">
+          <p>'.SLOGUN.'</p>
+          <div class="b-btn-group-hor f-btn-group-hor">
+            <a href="#" class="b-btn-group-hor__item f-btn-group-hor__item">
+              <i class="fa fa-instagram"></i>
+            </a>
+            <a href="#" class="b-btn-group-hor__item f-btn-group-hor__item">
+              <i class="fa fa-facebook"></i>
+            </a>
+            <a href="#" class="b-btn-group-hor__item f-btn-group-hor__item">
+              <i class="fa fa-youtube"></i>
+            </a>
+            <a href="#" class="b-btn-group-hor__item f-btn-group-hor__item">
+              <i class="fa fa-whatsapp"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="masonry-gridSizer col-sm-6 col-md-4">
+        <h4 class="f-primary-b f-legacy-h4">Our Services</h4>
+        <div class="b-blog-short-post row">
+          <div class="b-blog-short-post__item col-md-12 col-sm-4 col-xs-12 f-primary-b">
+            <li><b>'.val('home', 'website_development').'</b></li>
+            <hr>
+            <li><b>'.val('home', 'billing_system').'</b></li>
+            <hr>
+            <li><b>'.val('home', 'travel_system').'</b></li>
+            <hr>
+            <li><b>'.val('home', 'money_transfer_prog').'</b></li>
+          </div>
+        </div>
+      </div>
+      <div class="masonry-gridSizer col-sm-6 col-md-4">
+        <h4 class="f-primary-b f-legacy-h4">Contact Info</h4>
+        <div class="b-contacts-short-item-group">
+          <div class="b-contacts-short-item col-md-12 col-sm-4 col-xs-12">
+            <div class="b-contacts-short-item__icon f-contacts-short-item__icon f-contacts-short-item__icon_lg b-left">
+              <i class="fa fa-map-marker"></i>
+            </div>
+            <div class="b-remaining f-contacts-short-item__text">
+              <b>'.MAIN_ADDRESS.'<br />
+                '.MAIN_CITY.'<br />
+              </b>
+            </div>
+          </div>
+          <div class="b-contacts-short-item col-md-12 col-sm-4 col-xs-12">
+            <div class="b-contacts-short-item__icon f-contacts-short-item__icon b-left f-contacts-short-item__icon_xs">
+              <i class="fa fa-envelope"></i>
+            </div>
+            <div class="b-remaining f-contacts-short-item__text f-contacts-short-item__text_email">
+              <a href="mailto:'.MAIN_EMAIL.'"><b>'.MAIN_EMAIL.'</b></a>
+            </div>
+          </div>
+          <div class="b-contacts-short-item col-md-12 col-sm-4 col-xs-12">
+            <div class="b-contacts-short-item__icon f-contacts-short-item__icon b-left f-contacts-short-item__icon_xs">
+              <i class="fa fa-envelope"></i>
+            </div>
+            <div class="b-remaining f-contacts-short-item__text f-contacts-short-item__text_email">
+              <b>'.MAIN_PHONE.'</b>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
       ';
   }
 
-  function get_header_1(){
-    return '<header>
-    <div class="b-top-options-panel b-top-options-panel--color">
-        <div class="container">
-            <div class="b-option-contacts f-option-contacts">
-                <a href="mailto:frexystudio@gmail.com"><i class="fa fa-envelope-o"></i> mail@example.com</a>
-                <a href="#"><i class="fa fa-phone"></i> +12 345 6789 </a>
-                <a href="#"><i class="fa fa-skype"></i> ask.company</a>
-            </div>
-            <div class="b-option-total-cart">
-                <div class="b-option-total-cart__goods">
-                    <a href="#" class="f-option-total-cart__numbers b-option-total-cart__numbers"><i class="fa fa-language"></i> english</a>
-                    <a href="#" class="f-option-total-cart__numbers b-option-total-cart__numbers"><i class="fa fa-language"></i> deutsch</a>
-                    <a href="#" class="f-option-total-cart__numbers b-option-total-cart__numbers"><i class="fa fa-language"></i> tamil</a>
-                    
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container b-header__box b-relative">
-        <a href="/" class="b-left b-logo"><img class="color-theme" data-retina src="img/logo-header-default.png" alt="Logo" /></a>
-        <div class="b-header-r b-right">
-            <div class="b-header-ico-group f-header-ico-group b-right">
-                        <span class="b-search-box">
-                            <i class="fa fa-search"></i>
-                            <input type="text" placeholder="Enter your keywords"/>
-                        </span>
-            </div>
-            <div class="b-top-nav-show-slide f-top-nav-show-slide b-right j-top-nav-show-slide"><i class="fa fa-align-justify"></i></div>
-            <nav class="b-top-nav f-top-nav b-right j-top-nav">
-                <ul class="b-top-nav__1level_wrap">
-  <li class="b-top-nav__1level f-top-nav__1level is-active-top-nav__1level f-primary-b"><a href="homepage-1-index.html"><i class="fa fa-home b-menu-1level-ico"></i>Home <span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
-      <div class="b-top-nav__dropdomn">
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title is-active-top-nav__2level-title">Homepage</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="homepage-1-index.html"><i class="fa fa-angle-right"></i>Home v1: Landing Page</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary is-active-top-nav__2level"><a href="homepage-1_index_product_launch.html"><i class="fa fa-angle-right"></i>Home v2: Product Launch</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="homepage-1_index_classic_v1.html"><i class="fa fa-angle-right"></i>Home v3: Classic v1</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="homepage-1_index_classic_v2.html"><i class="fa fa-angle-right"></i>Home v4: Classic v2</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="homepage-1_index_blog.html"><i class="fa fa-angle-right"></i>Home v5: Blog Style</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="homepage-1_index_portfolio.html"><i class="fa fa-angle-right"></i>Home v6: Portfolio Style</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="homepage-1_index_one_page.html"><i class="fa fa-angle-right"></i>Home v7: One Page Parallax</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="homepage-1_index_shop.html"><i class="fa fa-angle-right"></i>Home v8: Frontpage Shop</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="homepage-1_index_education.html"><i class="fa fa-angle-right"></i>Home v9: Frontpage Education</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="homepage-1_index_travel.html"><i class="fa fa-angle-right"></i>Home v10: Frontpage Travel</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="homepage-1_index_real_estate.html"><i class="fa fa-angle-right"></i>Home v11: Frontpage Real Estate</a></li>
-          </ul>
-      </div>
-  </li>
-  <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
-      <a href="page_header_1.html"><i class="fa fa-folder-open b-menu-1level-ico"></i>Headers<span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
-      <div class="b-top-nav__dropdomn">
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Headers</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_header_1.html"><i class="fa fa-angle-right"></i>Header 1</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_header_2.html"><i class="fa fa-angle-right"></i>Header 2</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_header_3.html"><i class="fa fa-angle-right"></i>Header 3</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_header_4.html"><i class="fa fa-angle-right"></i>Header 4</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_header_5.html"><i class="fa fa-angle-right"></i>Header 5</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_header_6.html"><i class="fa fa-angle-right"></i>Header 6</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_header_7.html"><i class="fa fa-angle-right"></i>Header 7</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_header_8.html"><i class="fa fa-angle-right"></i>Header 8</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_header_9.html"><i class="fa fa-angle-right"></i>Header 9</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_header_10.html"><i class="fa fa-angle-right"></i>Header 10</a></li>
-          </ul>
-      </div>
-  </li>
-  <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
-      <a href="portfolio_our_portfolio_1_colums.html"><i class="fa fa-picture-o b-menu-1level-ico"></i>Portfolio <span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
-      <div class="b-top-nav__dropdomn">
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Portfolio</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="portfolio_our_portfolio_mansonry_layout.html"><i class="fa fa-angle-right"></i>Masonry  Portfolio</a></li>
-              <li data-box-id="0" class="b-top-nav__2level f-top-nav__2level f-primary b-top-nav__with-multi-lvl"><a onclick="return false" href=""><i class="fa fa-angle-right"></i>One Column</a>
-                  <ul id="0" class="b-top-nav__multi-lvl-box">
-                      <li class="b-top-nav__multi-lvl"><a href="portfolio_our_portfolio_1_colums.html"><i class="fa fa-angle-right"></i>Version1</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="portfolio_our_portfolio_1_colums_v2.html"><i class="fa fa-angle-right"></i>Version2</a></li>
-                  </ul>
-              </li>
-              <li data-box-id="1" class="b-top-nav__2level f-top-nav__2level f-primary b-top-nav__with-multi-lvl"><a onclick="return false" href=""><i class="fa fa-angle-right"></i>Two Columns</a>
-                  <ul id="1" class="b-top-nav__multi-lvl-box">
-                      <li class="b-top-nav__multi-lvl"><a href="portfolio_our_portfolio_2_colums.html"><i class="fa fa-angle-right"></i>Version1</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="portfolio_our_portfolio_2_colums_v2.html"><i class="fa fa-angle-right"></i>Version2</a></li>
-                  </ul>
-              </li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary b-top-nav__with-multi-lvl"><a onclick="return false" href=""><i class="fa fa-angle-right"></i>Three Columns</a>
-                  <ul class="b-top-nav__multi-lvl-box">
-                      <li class="b-top-nav__multi-lvl"><a href="portfolio_our_portfolio_3_colums.html"><i class="fa fa-angle-right"></i>Version1</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="portfolio_our_portfolio_3_colums_v2.html"><i class="fa fa-angle-right"></i>Version2</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="portfolio_our_portfolio_3_colums_v2_right_slidebar.html"><i class="fa fa-angle-right"></i>Right Sidebar</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="portfolio_our_portfolio_3_colums_v2_left_slidebar.html"><i class="fa fa-angle-right"></i>Left Sidebar</a></li>
-                  </ul>
-              </li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary b-top-nav__with-multi-lvl"><a onclick="return false" href=""><i class="fa fa-angle-right"></i>Four Columns</a>
-                  <ul class="b-top-nav__multi-lvl-box">
-                      <li class="b-top-nav__multi-lvl"><a href="portfolio_our_portfolio_4_colums.html"><i class="fa fa-angle-right"></i>Version1</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="portfolio_our_portfolio_4_colums_v2.html"><i class="fa fa-angle-right"></i>Version2</a></li>
-                  </ul>
-              </li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="portfolio_our_portfolio_detail.html"><i class="fa fa-angle-right"></i>Single Portfolio</a></li>
-          </ul>
-      </div>
-  </li>
-  <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
-      <a href="our_blog_1_columns.html"><i class="fa fa-code b-menu-1level-ico"></i>Blog <span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
-      <div class="b-top-nav__dropdomn">
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Blog</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary b-top-nav__with-multi-lvl"><a onclick="return false" href=""><i class="fa fa-angle-right"></i>Blog Listing</a>
-                  <ul class="b-top-nav__multi-lvl-box">
-                      <li class="b-top-nav__multi-lvl"><a href="blog_listing_left_slidebar.html"><i class="fa fa-angle-right"></i>Left Sidebar</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_listing_right_slidebar.html"><i class="fa fa-angle-right"></i>Right Sidebar</a></li>
-                  </ul>
-              </li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary b-top-nav__with-multi-lvl"><a onclick="return false" href=""><i class="fa fa-angle-right"></i>One Column</a>
-                  <ul class="b-top-nav__multi-lvl-box">
-                      <li class="b-top-nav__multi-lvl"><a href="our_blog_1_columns.html"><i class="fa fa-angle-right"></i>Default version</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="our_blog_1_columns_left_slidebar.html"><i class="fa fa-angle-right"></i>Left Sidebar v1</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="our_blog_1_columns_left_slidebar_v2.html"><i class="fa fa-angle-right"></i>Left Sidebar v2</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="our_blog_1_columns_left_slidebar_v3.html"><i class="fa fa-angle-right"></i>Left Sidebar v3</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="our_blog_1_columns_right_slidebar.html"><i class="fa fa-angle-right"></i>Right Sidebar v1</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="our_blog_1_columns_right_slidebar_v2.html"><i class="fa fa-angle-right"></i>Right Sidebar v2</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="our_blog_1_columns_right_slidebar_v3.html"><i class="fa fa-angle-right"></i>Right Sidebar v3</a></li>
-                  </ul>
-              </li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary b-top-nav__with-multi-lvl"><a onclick="return false" href=""><i class="fa fa-angle-right"></i>Two Columns</a>
-                  <ul class="b-top-nav__multi-lvl-box">
-                      <li class="b-top-nav__multi-lvl"><a href="blog_listing_2_colums.html"><i class="fa fa-angle-right"></i>Version1</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_listing_2_colums_v2.html"><i class="fa fa-angle-right"></i>Version2</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_listing_2_colums_v3.html"><i class="fa fa-angle-right"></i>Version3</a></li>
-                  </ul>
-              </li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary b-top-nav__with-multi-lvl"><a onclick="return false" href=""><i class="fa fa-angle-right"></i>Three Columns</a>
-                  <ul class="b-top-nav__multi-lvl-box">
-                      <li class="b-top-nav__multi-lvl"><a href="blog_listing_3_colums.html"><i class="fa fa-angle-right"></i>Masonry</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_listing_3_colums_left_slidebar.html"><i class="fa fa-angle-right"></i>Left Sidebar v1</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_listing_3_colums_left_slidebar_v2.html"><i class="fa fa-angle-right"></i>Left Sidebar v2</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_listing_3_colums_right_slidebar.html"><i class="fa fa-angle-right"></i>Right Sidebar v1</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_listing_3_colums_right_slidebar_v2.html"><i class="fa fa-angle-right"></i>Right Sidebar v2</a></li>
-                  </ul>
-              </li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="blog_listing_4_colums.html"><i class="fa fa-angle-right"></i>Four Columns</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary b-top-nav__with-multi-lvl"><a onclick="return false" href=""><i class="fa fa-angle-right"></i>Blog detail</a>
-                  <ul class="b-top-nav__multi-lvl-box">
-                      <li class="b-top-nav__multi-lvl"><a href="blog_detail_audio_post.html"><i class="fa fa-angle-right"></i>Audio Post</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_detail_video_post.html"><i class="fa fa-angle-right"></i>Video Post</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_detail_left_slidebar.html"><i class="fa fa-angle-right"></i>Left Sidebar</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_detail_right_slidebar.html"><i class="fa fa-angle-right"></i>Right Sidebar</a></li>
-                  </ul>
-              </li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary b-top-nav__with-multi-lvl"><a onclick="return false" href=""><i class="fa fa-angle-right"></i>Blog Timeline</a>
-                  <ul class="b-top-nav__multi-lvl-box">
-                      <li class="b-top-nav__multi-lvl"><a href="blog_timeline_full_width.html"><i class="fa fa-angle-right"></i>Full width</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_timeline_left_slidebar.html"><i class="fa fa-angle-right"></i>Left Sidebar</a></li>
-                      <li class="b-top-nav__multi-lvl"><a href="blog_timeline_right_slidebar.html"><i class="fa fa-angle-right"></i>Right Sidebar</a></li>
-                  </ul>
-              </li>
-          </ul>
-      </div>
-  </li>
-  <li class="b-top-nav__1level f-top-nav__1level f-primary-b b-top-nav-big">
-      <a href="page_search_result.html"><i class="fa fa-cloud-download b-menu-1level-ico"></i>Pages<span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
-      <div class="b-top-nav__dropdomn">
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Our Gallery</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="our_gallery_2_colums.html"><i class="fa fa-angle-right"></i>2 Columns</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="our_gallery_3_colums.html"><i class="fa fa-angle-right"></i>3 Columns</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="our_gallery_4_colums.html"><i class="fa fa-angle-right"></i>4 Columns</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Services</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="our_services_version_1.html"><i class="fa fa-angle-right"></i>Version 1</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="our_services_version_2.html"><i class="fa fa-angle-right"></i>Version 2</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="our_services_version_3.html"><i class="fa fa-angle-right"></i>Version 3</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">About us</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="about_us_pricing.html"><i class="fa fa-angle-right"></i>Pricing version</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="about_us_version_1.html"><i class="fa fa-angle-right"></i>Version 1</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="about_us_version_2.html"><i class="fa fa-angle-right"></i>Version 2</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="about_us_version_3.html"><i class="fa fa-angle-right"></i>Version 3</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="about_us_faqs_page.html"><i class="fa fa-angle-right"></i>FAQs</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="about_us_meet_our_team.html"><i class="fa fa-angle-right"></i>Meet our team</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="about_us_meet_our_team_detail.html"><i class="fa fa-angle-right"></i>Meet our team detail</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Extra pages</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="extra_pages_coming_soon.html"><i class="fa fa-angle-right"></i>Coming soon v1</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="extra_pages_coming_soon_v2.html"><i class="fa fa-angle-right"></i>Coming soon v2</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_error_404.html"><i class="fa fa-angle-right"></i>404 page</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_loading_v1.html"><i class="fa fa-angle-right"></i>Loading page v1</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="extra_pages_loading_v2.html"><i class="fa fa-angle-right"></i>Loading page v2</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Extra pages 2</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_forgot_username_password.html"><i class="fa fa-angle-right"></i>Forgot Password</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_log_in_page.html"><i class="fa fa-angle-right"></i>Log in v1</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_log_in_page_v2.html"><i class="fa fa-angle-right"></i>Log in v2</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_registration_page.html"><i class="fa fa-angle-right"></i>Registration Page</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="page_search_result.html"><i class="fa fa-angle-right"></i>Search result page</a></li>
-          </ul>
-      </div>
-  </li>
-  <li class="b-top-nav__1level f-top-nav__1level f-primary-b b-top-nav-big">
-      <a href="shortcode_typography.html"><i class="fa fa-inbox b-menu-1level-ico"></i>Shortcodes <span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
-      <div class="b-top-nav__dropdomn">
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_tabs_accordions.html#accordions"><i class="fa fa-angle-right"></i>Accordions</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_web_elements.html"><i class="fa fa-angle-right"></i>Alert Messages</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_web_elements.html#blockquotes"><i class="fa fa-angle-right"></i>Block Quotes</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_web_elements.html#buttons"><i class="fa fa-angle-right"></i>Buttons</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_typography.html#columns"><i class="fa fa-angle-right"></i>Columns</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_drop_box.html"><i class="fa fa-angle-right"></i>Dropboxes</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_web_elements_2.html#formelements"><i class="fa fa-angle-right"></i>Form Elements</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_pricing_tables.html"><i class="fa fa-angle-right"></i>Pricing table</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_skills_bars.html"><i class="fa fa-angle-right"></i>Progressbar & Skillbars</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_slideshow_videos.html"><i class="fa fa-angle-right"></i>Slider show & Sliders</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_tabs_accordions.html"><i class="fa fa-angle-right"></i>Tabs</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_web_elements.html#tables"><i class="fa fa-angle-right"></i>Tables</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_web_elements_2.html"><i class="fa fa-angle-right"></i>Tagline Boxes</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_web_elements.html#testimonials"><i class="fa fa-angle-right"></i>Testimonials</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_typography.html"><i class="fa fa-angle-right"></i>Typography</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_slideshow_videos.html#videos"><i class="fa fa-angle-right"></i>Videos</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shortcode_widgets.html"><i class="fa fa-angle-right"></i>Widgets</a></li>
-          </ul>
-      </div>
-  </li>
-  <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
-      <a href="shop_listing_col.html"><i class="fa fa-list b-menu-1level-ico"></i>Shop <span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
-      <div class="b-top-nav__dropdomn">
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Shopping</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shop_listing_col.html"><i class="fa fa-angle-right"></i>Shop List Column</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shop_listing_row.html"><i class="fa fa-angle-right"></i>Shop List Row</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shop_listing_col_full_width.html"><i class="fa fa-angle-right"></i>Shop List Full width v1</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shop_listing_col_full_width_v2.html"><i class="fa fa-angle-right"></i>Shop List Full width v2</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shop_detail.html"><i class="fa fa-angle-right"></i>Single Product</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shop_cart.html"><i class="fa fa-angle-right"></i>Shopping cart</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="shop_check_out.html"><i class="fa fa-angle-right"></i>Check out page</a></li>
-          </ul>
-      </div>
-  </li>
-  <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
-      <a href="contact_us.html"><i class="fa fa-folder-open b-menu-1level-ico"></i>Contact us<span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
-      <div class="b-top-nav__dropdomn">
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Contact us</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="contact_us.html"><i class="fa fa-angle-right"></i>Version1</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="contact_us_v2.html"><i class="fa fa-angle-right"></i>Version2</a></li>
-          </ul>
-      </div>
-  </li>
-  <li class="b-top-nav__1level f-top-nav__1level f-primary-b b-top-nav-big">
-      <a href="education_listing.html"><i class="fa fa-folder-open b-menu-1level-ico"></i>Packages<span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
-      <div class="b-top-nav__dropdomn">
-           <ul class="b-top-nav__2level_wrap">
-               <li class="b-top-nav__2level_title f-top-nav__2level_title">Education</li>
-               <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="education_listing.html"><i class="fa fa-angle-right"></i>Education Listing</a></li>
-               <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="education_detail.html"><i class="fa fa-angle-right"></i>Education Detail</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Travel1</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="travel_hotels_search.html"><i class="fa fa-angle-right"></i>Hotel Search</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="travel_hotels_listing_left_slidebar.html"><i class="fa fa-angle-right"></i>Hotel Listing L-sidebar</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="travel_hotels_listing_right_slidebar.html"><i class="fa fa-angle-right"></i>Hotel Listing R-sidebar</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="travel_hotels_details_left_slidebar.html"><i class="fa fa-angle-right"></i>Hotel Detail L-sidebar</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="travel_hotels_details_right_slidebar.html"><i class="fa fa-angle-right"></i>Hotel Detail R-sidebar</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Travel2</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="travel_tour_listing.html"><i class="fa fa-angle-right"></i>Tour Listing</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="travel_tours_listing_left_slidebar.html"><i class="fa fa-angle-right"></i>Tour Listing L-sidebar</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="travel_tours_listing_right_slidebar.html"><i class="fa fa-angle-right"></i>Tour Listing R-sidebar</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="travel_tours_details_left_slidebar.html"><i class="fa fa-angle-right"></i>Tour Detail L-sidebar</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="travel_tours_details_right_slidebar.html"><i class="fa fa-angle-right"></i>Tour Detail R-sidebar</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Real Estate1</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="real_estate_search_properties.html"><i class="fa fa-angle-right"></i>Properties Search</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="real_estate_agents_left_sidebar.html"><i class="fa fa-angle-right"></i>Agent List L-sidebar</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="real_estate_agents_right_sidebar.html"><i class="fa fa-angle-right"></i>Agent List R-sidebar</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="real_estate_agents_listing_property.html"><i class="fa fa-angle-right"></i>Agents Listing Property</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="real_estate_agents_listing_property.html"><i class="fa fa-angle-right"></i>Agent Detail</a></li>
-          </ul>
-          <ul class="b-top-nav__2level_wrap">
-              <li class="b-top-nav__2level_title f-top-nav__2level_title">Real Estate2</li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="real_estate_home_listing_grid.html"><i class="fa fa-angle-right"></i>Home Listing Grid</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="real_estate_home_listing_left_sidebar.html"><i class="fa fa-angle-right"></i>Home Listing L-sidebar</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="real_estate_home_listing_right_sidebar.html"><i class="fa fa-angle-right"></i>Home Listing R-sidebar</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="real_estate_home_detail_left_sidebar.html"><i class="fa fa-angle-right"></i>Home Detail L-sidebar</a></li>
-              <li class="b-top-nav__2level f-top-nav__2level f-primary"><a href="real_estate_home_detail_right_sidebar.html"><i class="fa fa-angle-right"></i>Home Detail R-sidebar</a></li>
-          </ul>
-      </div>
-  </li>
-</ul>
-
-            </nav>
-        </div>
-    </div>
-</header>';
-  }
-  
   function get_header(){
-    $home = val("home", "home");
-    $about_us = val("home", "about_us");
-    $services = val("home", "our_services");
-    $price = val("home", "packages");
-    $contact_us = val("home", "contact_us");
+    $home = val("common", "home");
+    $about_us = val("common", "about_us");
+    $services = val("common", "our_services");
+    $price = val("common", "packages");
+    $contact_us = val("common", "contact_us");
       return '
-      <div class="mask-l" style="background-color: #fff; width: 100%; height: 100%; position: fixed; top: 0; left:0; z-index: 9999999;"></div> <!--removed by integration-->
-       <header>
-       <div class="b-top-options-panel b-top-options-panel--color">
-          <div class="container">
-              <div class="b-option-contacts f-option-contacts">
-                  <a href="mailto:frexystudio@gmail.com"><i class="fa fa-envelope-o"></i> '.MAIN_EMAIL.'</a>
-                  <a href="#"><i class="fa fa-phone"></i> '.MAIN_PHONE.' </a>
-              </div>
-              <div class="b-option-total-cart">
-                  <div class="b-option-total-cart__goods">
-                      <a href="home.php?lang=en" class="f-option-total-cart__numbers b-option-total-cart__numbers"><img src="img/flags/uk.png"></i> English</a>
-                      <a href="home.php?lang=de" class="f-option-total-cart__numbers b-option-total-cart__numbers"><img src="img/flags/de.png"></i> Deutsch</a>
-                      <a href="home.php?lang=ta" class="f-option-total-cart__numbers b-option-total-cart__numbers"><img src="img/flags/ta.png"></i> தமிழ்</a>
-                  </div>
-              </div>
-          </div>
+<div class="mask-l"
+  style="background-color: #fff; width: 100%; height: 100%; position: fixed; top: 0; left:0; z-index: 9999999;"></div>
+<!--removed by integration-->
+<header>
+  <div class="b-top-options-panel b-top-options-panel--color">
+    <div class="container">
+      '.MAIN_HEADER.'
+      '.LANGS_BUTTON.'
+    </div>
+  </div>
+  <div class="container b-header__box b-relative">
+    <a href="home.php" class="b-left b-logo ">
+      <img class="color-theme" data-retina src="'.MAIN_LOGO.'" alt="Logo" />
+    </a>
+    <div class="b-header-r b-right b-header-r--icon">
+      <div class="b-top-nav-show-slide f-top-nav-show-slide b-right j-top-nav-show-slide">
+        <i class="fa fa-align-justify"></i>
       </div>
-      <div class="container b-header__box b-relative">
-        <a href="index.php" class="b-left b-logo ">
-            <img class="color-theme" data-retina src="img/logo/logo.png" alt="Logo" />
-        </a>
-        <div class="b-header-r b-right b-header-r--icon">
-         <div class="b-top-nav-show-slide f-top-nav-show-slide b-right j-top-nav-show-slide">
-            <i class="fa fa-align-justify"></i>
-        </div>
-        <nav class="b-top-nav f-top-nav b-right j-top-nav">
-              <ul class="b-top-nav__1level_wrap">
-        <li class="b-top-nav__1level f-top-nav__1level is-active-top-nav__1level f-primary-b">
-            <a href="index.php">
-                <i class="fa fa-home b-menu-1level-ico"></i>
-                '.$home.'
-                <span class="b-ico-dropdown">
+      <nav class="b-top-nav f-top-nav b-right j-top-nav">
+        <ul class="b-top-nav__1level_wrap">
+          <li class="b-top-nav__1level f-top-nav__1level is-active-top-nav__1level f-primary-b">
+            <a href="home.php">
+              <i class="fa fa-home b-menu-1level-ico"></i>
+              '.$home.'
+              <span class="b-ico-dropdown">
                 <i class="fa fa-arrow-circle-down"></i></span>
             </a>
-         </li>
-        <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
+          </li>
+          <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
             <a href="about.php"><i class="fa fa-folder-open b-menu-1level-ico">
-                </i>'.$about_us.'<span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span>
+              </i>'.$about_us.'<span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span>
             </a>
-        </li>
-        <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
+          </li>
+          <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
             <a href="service.php">
-                <i class="fa fa-picture-o b-menu-1level-ico"></i>'.$services.'
-                <span class="b-ico-dropdown">
-                    <i class="fa fa-arrow-circle-down"></i>
-                </span>
+              <i class="fa fa-picture-o b-menu-1level-ico"></i>'.$services.'
+              <span class="b-ico-dropdown">
+                <i class="fa fa-arrow-circle-down"></i>
+              </span>
             </a>
-            
-        </li>
-        <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
+          </li>
+          <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
             <a href="price.php">
-                <i class="fa fa-code b-menu-1level-ico"></i>
-                '.$price.'
-            <span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
-           
-        </li>
-       <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
+              <i class="fa fa-code b-menu-1level-ico"></i>
+              '.$price.'
+              <span class="b-ico-dropdown"><i class="fa fa-arrow-circle-down"></i></span></a>
+          </li>
+          <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
             <a href="contact.php">
-                <i class="fa fa-folder-open b-menu-1level-ico"></i>
-                '.$contact_us.'
-                <span class="b-ico-dropdown">
-                    <i class="fa fa-arrow-circle-down"></i>
-                </span>
+              <i class="fa fa-folder-open b-menu-1level-ico"></i>
+              '.$contact_us.'
+              <span class="b-ico-dropdown">
+                <i class="fa fa-arrow-circle-down"></i>
+              </span>
             </a>
-        </li>
-      </ul>
-      
-          </nav>
-          
-        </div>
-      </div>
-      
-      </header>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
       ';
   }
   function whatsapp(){
@@ -1049,9 +730,7 @@ function val($page, $button){
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2717.8156967910822!2d7.313810500000001!3d47.06346560000001!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478e23003a385691%3A0x2fab28a6ad19611!2sSaran%20Solution!5e0!3m2!1sen!2sch!4v1715119419996!5m2!1sen!2sch" width="1500" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
 </div>
-</section>
-      
-        ';
+</section>';
     }
 function contact_second_section(){
         return '<section class="b-diagonal-line-bg-light b-bord-box">

@@ -1,5 +1,5 @@
 <?php
-$page = 'home';
+$page = 'about_us';
 $count = 0;
 $result = array();
 $handle = fopen("test.html", "r");
