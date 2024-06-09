@@ -1,102 +1,113 @@
 <?php 
 require_once 'funcs/cons.php';
-require_once 'contact_section.php';
+require_once 'funcs/db.php';
+require_once 'funcs/page.php';
+
+session_start();
+change_lang();
+
+$profile = array();
+$profile['page'] = 'contact_us';
+echo get_doc($profile);
+
+function get_contact_us(){
+    return '
+    <section class="container">
+  <div class="l-main-container">
+    <div class="b-breadcrumbs f-breadcrumbs">
+      <div class="container">
+        <ul>
+          <li><a href="home.php"> <i class="fa fa-home"></i>'.val('common', 'home').'</a></li>
+          <li><span> <i class="fa fa-angle-right"></i>'.val('common', 'contact_us').'</span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d679.4045081462725!2d7.313326469577551!3d47.067342711674605!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x478e2389203bcb11%3A0xfc07acb3b8b74ab0!2sSaran%20Solutions!5e0!3m2!1sen!2sch!4v1716275119026!5m2!1sen!2sch"
+        width="1250" height="500" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</section>
+
+<section class="b-diagonal-line-bg-light b-bord-box">
+  <section class="container">
+    <div class="row b-shortcode-example">
+      <div class="col-xs-12 col-sm-6">
+        <div class="b-form-row f-primary-l f-title-big c-secondary">Get Quote</div>
+        <div class="b-form-row">How can I help you?</div>
+        <hr class="b-hr" />
+        <div class="row b-form-inline b-form-horizontal">
+          <div class="col-xs-12">
+            <div class="b-form-row">
+              <label class="b-form-horizontal__label" for="create_account_name">Your name</label>
+              <div class="b-form-horizontal__input">
+                <input type="text" id="create_account_name" class="form-control" />
+              </div>
+            </div>
+            <div class="b-form-row">
+              <label class="b-form-horizontal__label" for="create_account_email">E-Mail</label>
+              <div class="b-form-horizontal__input">
+                <input type="text" id="create_account_email" class="form-control" />
+              </div>
+            </div>
+
+
+            <div class="b-form-row">
+              <label class="b-form-horizontal__label" for="create_account_phone">Phone Number</label>
+              <div class="b-form-horizontal__input">
+                <input type="text" id="create_account_phone" class="form-control" />
+              </div>
+            </div>
+            <div class="b-form-row">
+              <label class="b-form-horizontal__label" for="create_account_location">Requirement</label>
+              <div class="b-form-horizontal__input">
+                <input type="text" id="create_account_location" class="form-control" />
+              </div>
+            </div>
+            <div class="b-form-row">
+              <div class="b-form-horizontal__label"></div>
+              <div class="b-form-horizontal__input">
+                <a href="#" class="b-btn f-btn b-btn-md b-btn-default f-primary-b b-btn__w100">Get Quotation</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-12 col-sm-6">
+        <div class="b-form-row f-primary-l f-title-big c-secondary">Contact us</div>
+        <div class="b-form-row">We are here to help you. As soon as possible, we will contact you.</div>
+        <hr class="b-hr" />
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="b-form-row">
+              <input type="text" class="form-control" placeholder="Your Email" />
+            </div>
+            <div class="b-form-row">
+              <input type="text" class="form-control" placeholder="Your email" />
+            </div>
+            <div class="b-form-row">
+              <input type="text" class="form-control" placeholder="Your website" />
+            </div>
+            <div class="b-form-row">
+              <input type="text" class="form-control" placeholder="Your title" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="b-form-row">
+              <textarea class="form-control" placeholder="Your message" rows="5"></textarea>
+            </div>
+            <div class="b-form-row">
+              <a href="#" class="b-btn f-btn b-btn-md b-btn-default f-primary-b b-btn__w100">send message</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </section>
+</section>
+    ';
+}
 ?>
-<!DOCTYPE html>
-<html>
-<?php
-echo get_head();
-?>
-<body>
-<div class="mask-l" style="background-color: #fff; width: 100%; height: 100%; position: fixed; top: 0; left:0; z-index: 9999999;"></div> <!--removed by integration-->
-<?php
-echo get_header();
-echo whatsapp();
-echo first_section();
-echo second_section();
-?>
-</div>
-<?php
-echo footer();
-?>
-
-
-
-<script src="js/breakpoints.js"></script>
-<script src="js/jquery/jquery-1.11.1.min.js"></script>
-<!-- bootstrap -->
-<script src="js/scrollspy.js"></script>
-<script src="js/bootstrap-progressbar/bootstrap-progressbar.js"></script>
-<script src="js/bootstrap.min.js"></script>
-<!-- end bootstrap -->
-<script src="js/masonry.pkgd.min.js"></script>
-<script src='js/imagesloaded.pkgd.min.js'></script>
-<!-- bxslider -->
-<script src="js/bxslider/jquery.bxslider.min.js"></script>
-<!-- end bxslider -->
-<!-- flexslider -->
-<script src="js/flexslider/jquery.flexslider.js"></script>
-<!-- end flexslider -->
-<!-- smooth-scroll -->
-<script src="js/smooth-scroll/SmoothScroll.js"></script>
-<!-- end smooth-scroll -->
-<!-- carousel -->
-<script src="js/jquery.carouFredSel-6.2.1-packed.js"></script>
-<!-- end carousel -->
-<script src="js/rs-plugin/js/jquery.themepunch.plugins.min.js"></script>
-<script src="js/rs-plugin/js/jquery.themepunch.revolution.min.js"></script>
-<script src="js/rs-plugin/videojs/video.js"></script>
-
-<!-- jquery ui -->
-<script src="js/jqueryui/jquery-ui.js"></script>
-<!-- end jquery ui -->
-<script type="text/javascript" language="javascript"
-        src="https://maps.google.com/maps/api/js?sensor=false&key=AIzaSyAJ7dgBDkg2ze3UT4pMUFfgO6ltF2lZT9o"></script>
-<!-- Modules -->
-<script src="js/modules/sliders.js"></script>
-<script src="js/modules/ui.js"></script>
-<script src="js/modules/retina.js"></script>
-<script src="js/modules/animate-numbers.js"></script>
-<script src="js/modules/parallax-effect.js"></script>
-<script src="js/modules/settings.js"></script>
-<script src="js/modules/maps-google.js"></script>
-<script src="js/modules/color-themes.js"></script>
-<!-- End Modules -->
-
-<!-- Audio player -->
-<script type="text/javascript" src="js/audioplayer/js/jquery.jplayer.min.js"></script>
-<script type="text/javascript" src="js/audioplayer/js/jplayer.playlist.min.js"></script>
-<script src="js/audioplayer.js"></script>
-<!-- end Audio player -->
-
-<!-- radial Progress -->
-<script src="js/radial-progress/jquery.easing.1.3.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.13/d3.min.js"></script>
-<script src="js/radial-progress/radialProgress.js"></script>
-<script src="js/progressbars.js"></script>
-<!-- end Progress -->
-
-<!-- Google services -->
-<script type="text/javascript" src="https://www.google.com/jsapi?autoload={'modules':[{'name':'visualization','version':'1','packages':['corechart']}]}"></script>
-<script src="js/google-chart.js"></script>
-<!-- end Google services -->
-<script src="js/j.placeholder.js"></script>
-
-<!-- Fancybox -->
-<script src="js/fancybox/jquery.fancybox.pack.js"></script>
-<script src="js/fancybox/jquery.mousewheel.pack.js"></script>
-<script src="js/fancybox/jquery.fancybox.custom.js"></script>
-<!-- End Fancybox -->
-<script src="js/user.js"></script>
-<script src="js/timeline.js"></script>
-<script src="js/fontawesome-markers.js"></script>
-<script src="js/markerwithlabel.js"></script>
-<script src="js/cookie.js"></script>
-<script src="js/loader.js"></script>
-<script src="js/scrollIt/scrollIt.min.js"></script>
-<script src="js/modules/navigation-slide.js"></script>
-
-
-</body>
-</html>
-
