@@ -40,7 +40,7 @@ function change_lang(){
 
 function val($page, $button){
     $con = "page ='".$page."' and button = '".$button."' and lang = '".$_SESSION["lang"]."'";
-    $sql = "SELECT value FROM lang_table where ".$con;
+    $sql = "SELECT value FROM ".DB_NAME.".lang_table where ".$con;
     return getSingleValue($sql);
   }
   
@@ -196,6 +196,11 @@ function val($page, $button){
             </div>
             <div class="b-remaining f-contacts-short-item__text f-contacts-short-item__text_email">
               <b>'.MAIN_PHONE.'</b>
+            </div>
+          </div>
+          <div class="b-contacts-short-item col-md-12 col-sm-4 col-xs-12">
+            <div class="b-remaining f-contacts-short-item__text f-contacts-short-item__text_email">
+                <b><a href="sitemap.xml" target="_blank">'.SITE_MAP.'</a></b> || <b><a href="img/sitemap.png" target="_blank">'.SITE_MAP_VIEW.'</a></b>
             </div>
           </div>
         </div>
