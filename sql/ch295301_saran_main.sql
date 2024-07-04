@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Jun 09, 2024 at 11:21 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Host: localhost
+-- Generation Time: Jul 04, 2024 at 04:15 AM
+-- Server version: 8.0.37-0ubuntu0.20.04.3
+-- PHP Version: 8.2.20
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ch295301_saran_main`
+-- Database: `ch295301_new_saransol`
 --
 
 -- --------------------------------------------------------
@@ -28,12 +28,12 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `lang_table` (
-  `id` int(11) NOT NULL,
-  `page` varchar(25) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL,
-  `button` varchar(25) CHARACTER SET utf8 COLLATE utf8_unicode_ci DEFAULT NULL,
+  `id` int NOT NULL,
+  `page` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_bin DEFAULT NULL,
+  `button` varchar(25) CHARACTER SET utf8mb3 COLLATE utf8mb3_unicode_ci DEFAULT NULL,
   `lang` varchar(5) DEFAULT NULL,
   `value` varchar(3000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `lang_table`
@@ -272,7 +272,10 @@ INSERT INTO `lang_table` (`id`, `page`, `button`, `lang`, `value`) VALUES
 (321, 'about_us', 'programing', 'ta', 'programing'),
 (322, 'about_us', 'web_design', 'de', 'web design'),
 (323, 'about_us', 'web_design', 'en', 'web design'),
-(324, 'about_us', 'web_design', 'ta', 'web design');
+(324, 'about_us', 'web_design', 'ta', 'web design'),
+(325, 'common', 'language', 'en', 'Language'),
+(326, 'common', 'language', 'de', 'Sprache'),
+(327, 'common', 'language', 'ta', 'மொழி');
 
 --
 -- Indexes for dumped tables
@@ -292,7 +295,7 @@ ALTER TABLE `lang_table`
 -- AUTO_INCREMENT for table `lang_table`
 --
 ALTER TABLE `lang_table`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=325;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
