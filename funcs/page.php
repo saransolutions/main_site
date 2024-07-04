@@ -142,7 +142,7 @@ function footer()
   <div class="container">
     <div class="b-footer-secondary row">
       <div class="masonry-gridSizer col-sm-6 col-md-4 f-center b-footer-logo-containter">
-        <a href=""><img data-retina class="b-footer-logo color-theme" src="' . MAIN_LOGO . '" alt="Logo" /></a>
+        <a href=""><img data-retina class="b-footer-logo color-theme" src="' . MAIN_LOGO . '" alt="Logo"/></a>
         <div class="b-footer-logo-text f-footer-logo-text">
           <p>' . SLOGUN . '</p>
           <div class="b-btn-group-hor f-btn-group-hor">
@@ -232,7 +232,7 @@ function get_header()
 <header>
   <div class="container b-header__box b-relative">
     <a href="home.php" class="b-left b-logo ">
-      <img class="color-theme" data-retina src="' . MAIN_LOGO . '" alt="Logo" />
+      <img class="color-theme" data-retina src="' . MAIN_LOGO . '" alt="Logo" style="max-width:200px;" />
     </a>
     <div class="b-header-r b-right b-header-r--icon">
       <div class="b-top-nav-show-slide f-top-nav-show-slide b-right j-top-nav-show-slide">
@@ -286,7 +286,9 @@ function get_header()
             <div class="b-top-nav__dropdomn">
                 <ul class="b-top-nav__2level_wrap">
                     <li class="b-top-nav__2level f-top-nav__2level f-primary">
-                        <a href="home.php?lang=en" class="f-option-total-cart__numbers b-option-total-cart__numbers"><img src="img/flags/uk.png"></img> English</a>
+                        <a href="home.php?lang=en" class="f-option-total-cart__numbers b-option-total-cart__numbers">
+                            <img src="img/flags/uk.png"></img> English
+                        </a>
                     </li>
                     <li class="b-top-nav__2level f-top-nav__2level f-primary">
                         <a href="home.php?lang=de" class="f-option-total-cart__numbers b-option-total-cart__numbers"><img src="img/flags/de.png"></img> Deutsch</a>
@@ -296,6 +298,15 @@ function get_header()
                     </li>
                 </ul>
             </div>
+          </li>
+          <li class="b-top-nav__1level f-top-nav__1level f-primary-b">
+            <a href="http://admin.saransolutions.ch" target="_blank">
+              <i class="fa fa-folder-open b-menu-1level-ico"></i>
+              Login
+              <span class="b-ico-dropdown">
+                <i class="fa fa-arrow-circle-down"></i>
+              </span>
+            </a>
           </li>
         </ul>
       </nav>
