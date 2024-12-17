@@ -38,10 +38,10 @@ function get_service()
                             </div>
                             <div class="b-news-item__info">
                                 <div class="b-news-item__info_text f-news-item__info_text f-primary-l">
-                                    <h4 style="color:red;font-weight:bold;font-size:15px">Invoce for
+                                    <h4 style="color:red;font-weight:bold;font-size:15px">Invoice for
                                         Sabre,Amadeus,Galileo</h4>
                                     We can design a invoice system for Sabre,Amadeus and Galileo.You can print the
-                                    flight tiket perfectly.
+                                    flight ticket perfectly.
                                 </div>
                             </div>
                         </div>
@@ -97,9 +97,10 @@ function get_service()
                             <div class="b-news-item__info">
 
                                 <div class="b-news-item__info_text f-news-item__info_text f-primary-l">
-                                    <h4 style="color:red;font-weight:bold;font-size:15px">Invoice system for jewelery
+                                    <h4 style="color:red;font-weight:bold;font-size:15px">Invoice system for Jewellery
                                         shop</h4>
-                                    We design a invoice system for jewelry shop.Jewelery saving scheme also we designed.
+                                    We design a invoice system for jewelry shop.Jewellery saving scheme also we designed.
+                                    <a class="btn btn-primary btn-sm" target="_blank" href="https://admin_jewel.saransolutions.ch/" role="button">Try It</a>
                                 </div>
                             </div>
                         </div>

@@ -359,11 +359,7 @@ function get_clients(){
         <div
             class="b-default-top-indent b-carousel-reset b-carousel-arr-out b-carousel-small-arr f-carousel-small-arr b-remaining">
             <div class="f-center b-logo-group j-logo-slider">
-                <div class="b-logo-item"><a href="#">
-                        <img class="is-normal" src="img/clients/1.png" alt="" />
-                        <img class="is-hover" src="img/clients/1.png" alt="" />
-                    </a></div>
-                <div class="b-logo-item"><a href="#">
+                <div class="b-logo-item"><a href="https://sulakshangmbh.ch/">
                         <img class="is-normal" src="img/clients/2.png" alt="" />
                         <img class="is-hover" src="img/clients/2.png" alt="" />
                     </a></div>
@@ -371,6 +367,14 @@ function get_clients(){
                         <img class="is-normal" src="img/clients/3.png" alt="" />
                         <img class="is-hover" src="img/clients/3.png" alt="" />
                     </a></div>
+                <div class="b-logo-item"><a href="#">
+                        <img class="is-normal" src="img/clients/3.jpeg" alt="" />
+                        <img class="is-hover" src="img/clients/3.jpeg" alt="" />
+                    </a></div>
+                <div class="b-logo-item"><a href="https://finishexpress.ch/index.php">
+                    <img class="is-normal" src="img/clients/4.png" alt="" />
+                    <img class="is-hover" src="img/clients/4.png" alt="" />
+                </a></div>
 
                 <div class="b-logo-item"></div>
 

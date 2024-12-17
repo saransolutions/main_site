@@ -7,12 +7,11 @@ if ($handle) {
     while (($line = fgets($handle)) !== false) {
         $data = trim(strip_tags($line));
         if (strlen($data) > 0){
-            if (!str_contains($data, "#") && !str_contains($data, '"')){
+            if(!str_contains($data, "#") && !str_contains($data, '"')){
                 $result[]=$data;
                 #echo $count." ".$data."<br>";
                 $count++;
             }
-            
         }
     }
 
